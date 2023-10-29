@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <h3>Presciptions</h3>
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <form method="get" class="form" action="{{ url_for('display_prescriptions', user_id=user_id) }}">
+        <label for="date">Date:</label>
+        <input class="form-control"type="date" id="date" name="date" placeholder="dd/mm/yyyy">
+
+        <label for="medication">Medication:</label>
+        <input class="form-control"type="text" id="medication" name="medication" placeholder="Search by medication name..." >
+
+        <label for="repeating">Show Repeating Prescriptions:</label>
+        <select class="form-control" id="repeating" name="repeating">
+            <option value="">-- Select --</option> <!-- Neutral/Empty Option -->
+            <option value="true" {% if show_repeating == 'true' %}selected{% endif %}>Yes</option>
+            <option value="false" {% if show_repeating == 'false' %}selected{% endif %}>No</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <form method="get" action="{{ url_for('display_prescriptions', user_id=user_id) }}">
+        <button type="submit" class="btn btn-primary">Show All Prescriptions</button>
+    </form>
+</div>
+    
+</div>
+
+        <!-- Prescription List -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Prescription Date</th>
+                        <th>Medication</th>
+                        <th>Doctor</th>
+                        <th>Repeatable Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form method="post">
+                        {% for prescription in prescriptions_list %}
+                            <tr>
+                                <td>{{ prescription[0] }}</td>
+                                <td>{{ prescription[1] }}</td>
+                                <td>{{ prescription[2] }} {{ prescription[3] }}</td>
+                                <td>{% if prescription[-1] %}Repeating{% else %}One-off{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </form> 
+                </tbody>
+            </table>
+        </div>
+</div>
+
+{% endblock %}

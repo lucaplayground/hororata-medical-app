@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Reports</h3>
+    
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Report Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Appointments Report</td>
+                <td><a href="{{ url_for('appointments_by_type', role=role, user_id=user_id) }}">View</a></td>
+            </tr>
+            <tr>
+                <td>Financial Report</td>
+                <td><a href="{{ url_for('financial_report', role=role, user_id=user_id) }}">View</a></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="button-container">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>
+    </div>
+</div>
+{% endblock %}

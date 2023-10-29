@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h3>Select Appointment Type</h3>
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <select class="form-control" id="appt_type" name="appt_type" required>
+                            <option value="In-person">In-Person</option>
+                            <option value="Virtual">Virtual</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-primary form-control" value="Next">
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ url_for('home', role='patient', user_id=user_id) }}" class="btn btn-secondary form-control">Back</a>
+                </div>
+            </div>
+        </form>
+
+        <!-- Price Table -->
+        <h3 class="mt-5">Pricing Table</h3>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Appointment Type</th>
+                        <th>Age Group</th>
+                        <th>Price (NZD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for price in prices %}
+                    <tr>
+                        <td>{{ price[0] }}</td>
+                        <td>{{ price[1] }}</td>
+                        <td>{{ price[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

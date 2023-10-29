@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_class %}login-bg{% endblock %}
+{% block content %}
+  <div class="container">
+    <div>
+      Your virtual appointment has been confirmed!
+    </div>
+    <div class="confirm-action">
+      <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Go Back</a>
+    </div>
+  </div>
+{% endblock %}

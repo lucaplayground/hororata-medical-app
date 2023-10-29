@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h3>Book an Appointment</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <form class="form" method="POST">
+            <div class="form-group">
+                <label for="search_query">This appointment is for:</label>
+                <div class="search-box">
+                    <input class="form-control" type="text" id="search_query" name="search_query" placeholder="Enter a patient's name...">
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="btn btn-primary" type="submit">Search</button>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Go Back</a>
+            </div>
+        </form>
+
+        {% if patients %}
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Patient ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td>{{ patient[0] }}</td>
+                        <td>{{ patient[1] }}</td>
+                        <td>{{ patient[2] }}</td>
+                        <td>
+                            <a href="{{ url_for('select_staff', user_id=user_id, patient_id=patient[0]) }}" class="text-primary">Select</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

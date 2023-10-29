@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Health Records</h3>
+        <h5>Patient: {{ patient_data[1] }} {{ patient_data[2] }}</h5>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <!-- Display health records -->
+        <form action="{{ url_for('manage_health_records', user_id=session['user_id'], patient_id=patient_data[0], role=session['role']) }}" method="post" class="form mt-4">
+            {% for record in health_records %}
+                <div class="form-group">
+                    <label for="blood_type">Blood Type:</label>
+                    <input class="form-control" type="text" id="blood_type" name="blood_type" value="{{ record[2] }}">
+                </div>
+                <div class="form-group">
+                    <label for="allergies">Allergies:</label>
+                    <input class="form-control" type="text" id="allergies" name="allergies" value="{{ record[3] }}">
+                </div>
+                <div class="form-group">
+                    <label for="medications">Medications:</label>
+                    <input class="form-control" type="text" id="medications" name="medications" value="{{ record[4] }}">
+                </div>
+                <div class="form-group">
+                    <label for="medical_conditions">Medical Conditions:</label>
+                    <input class="form-control" type="text" id="medical_conditions" name="medical_conditions" value="{{ record[5] }}">
+                </div>
+                <div class="form-group">
+                    <label for="surgeries">Surgeries:</label>
+                    <input class="form-control" type="text" id="surgeries" name="surgeries" value="{{ record[6] }}">
+                </div>
+                <div class="form-group">
+                    <label for="family_history">Family History:</label>
+                    <input class="form-control" type="text" id="family_history" name="family_history" value="{{ record[7] }}">
+                </div>
+                <div class="form-group">
+                    <label for="test_results">Test Results:</label>
+                    <a href="{{ url_for('view_test_results', user_id=session['user_id'], patient_id=patient_data[0], role=session['role'])}}">View Test Results</a>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes" name="notes" rows="5" cols="20" class="form-control">{{ record[9] }}</textarea>
+                </div>
+            {% endfor %}
+            
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <!-- Role-based back button -->
+                {% if session['role'] == "Doctor" %}
+                    <a href="{{ url_for('my_patients', user_id=session['user_id']) }}" class="btn btn-secondary">Go Back</a>
+                {% elif session['role'] == "Nurse" %}
+                    <a href="{{ url_for('view_patient_details', user_id=session['user_id'], patient_id=patient_data[0]) }}" class="btn btn-secondary">Go Back</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

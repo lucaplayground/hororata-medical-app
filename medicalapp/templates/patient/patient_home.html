@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+  <div class="container">
+    <h3>Patient Dashboard</h3>
+    <div class="row">
+      <!-- Card 1: Book Appointment -->
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <img src="{{ url_for('static', filename='book-appt.jpg') }}" class="card-img-top" alt="Book Appointment">
+          <div class="card-body text-center">
+            <h5 class="card-title">Book Appointment</h5>
+            <p class="card-text">Schedule your next visit.</p>
+            <a href="{{ url_for('select_appointment_type', user_id=session['user_id']) }}" class="btn btn-secondary">Go</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 2: View my bookings -->
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <img src="{{ url_for('static', filename='my-bookings.jpg') }}" class="card-img-top" alt="View Appointments">
+          <div class="card-body text-center">
+            <h5 class="card-title">My Appointments</h5>
+            <p class="card-text">View your appointments.</p>
+            <a href="{{ url_for('my_appt', user_id=session['user_id'], role=role) }}" class="btn btn-secondary">Go</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Health Records -->
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <img src="{{ url_for('static', filename='health-records.jpg') }}" class="card-img-top" alt="Health Records">
+          <div class="card-body text-center">
+            <h5 class="card-title">Health Records</h5>
+            <p class="card-text">Access your medical history.</p>
+            <a href="{{ url_for('health_records', user_id=session['user_id']) }}" class="btn btn-secondary">Go</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Payment History -->
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <img src="{{ url_for('static', filename='payment-history.jpg') }}" class="card-img-top" alt="Payment History">
+          <div class="card-body text-center">
+            <h5 class="card-title">Payment History</h5>
+            <p class="card-text">Review your past payments.</p>
+            <a href="{{ url_for('payment_history', user_id=session['user_id']) }}" class="btn btn-secondary">Go</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <img src="{{ url_for('static', filename='patient-invoices.jpg') }}" class="card-img-top" alt="Invoice History">
+          <div class="card-body text-center">
+            <h5 class="card-title">Invoices</h5>
+            <p class="card-text">Review your invoices and make a payment.</p>
+            <a href="{{ url_for('unpaid_invoices', user_id=session['user_id'])}}" class="btn btn-secondary">GO</a>
+          </div>
+        </div>
+    </div>
+
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <img src="{{ url_for('static', filename='patient-prescriptions.jpg') }}" class="card-img-top" alt="Prescription History">
+          <div class="card-body text-center">
+            <h5 class="card-title">Prescriptions</h5>
+            <p class="card-text">View or repeat a prescription.</p>
+            <a href="{{ url_for('my_prescriptions', user_id=session['user_id'])}}" class="btn btn-secondary">GO</a>
+          </div>
+        </div>
+    </div>
+  </div>
+{% endblock %}

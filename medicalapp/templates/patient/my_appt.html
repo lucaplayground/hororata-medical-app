@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <!-- Your code goes here -->
+    <h3>My Appointments</h3>
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <!-- Search and Sort -->
+    <div class="row filter-row">
+        <div class="col-md-2">
+            <label for="typeFilter">Filter by Type: </label>
+            <select id="typeFilter" class="form-control">
+                <option value="all">All</option>
+                <option value="In-person">In-person</option>
+                <option value="Virtual">Virtual</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="roleFilter">Staff Role: </label>
+            <select id="roleFilter" class="form-control">
+                <option value="all">All</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Nurse">Nurse</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="statusFilter">Status: </label>
+            <select id="statusFilter" class="form-control">
+                <option value="all">All</option>
+                <option value="Upcoming">Upcoming</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary form-control">Go Back</a>
+        </div>
+    </div>
+
+    <!-- Appointment List -->
+    <div class="table-container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th class="d-none d-lg-table-cell">Time</th>
+                    <th class="d-none d-lg-table-cell">Role</th>
+                    <th>Staff Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment[6] }}</td>
+                        <td>{{ appointment[5]|escape }}</td>
+                        <td>{{ appointment[0] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ appointment[1] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ appointment[2] }}</td>
+                        <td>{{ appointment[3] }} {{ appointment[4] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const typeFilter = document.getElementById("typeFilter");
+            const roleFilter = document.getElementById("roleFilter");
+            const statusFilter = document.getElementById("statusFilter");
+            const tableRows = document.querySelectorAll(".table-container tbody tr");  // Select all rows
+
+            function filterRows() {
+                const selectedType = typeFilter.value.toLowerCase();
+                const selectedRole = roleFilter.value.toLowerCase();
+                const selectedStatus = statusFilter.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const typeCell = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                    const roleCell = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
+                    const statusCell = row.querySelector("td:nth-child(1)").textContent.toLowerCase();
+
+                    if ((selectedType === "all" || typeCell === selectedType) && 
+                        (selectedRole === "all" || roleCell === selectedRole) && 
+                        (selectedStatus === "all" || statusCell === selectedStatus)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+
+            typeFilter.addEventListener("change", filterRows);
+            roleFilter.addEventListener("change", filterRows);
+            statusFilter.addEventListener("change", filterRows);
+        });
+    </script>
+{% endblock %}

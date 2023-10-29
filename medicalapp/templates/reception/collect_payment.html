@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h3>Collect Payment</h3>
+        <form method="post">
+            <div class="form-group">
+                <label for="payment_method">Payment Method</label>
+                <select id="payment_method" name="payment_method" class="form-control">
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Debit Card">Debit Card</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="total_amount">Total Amount</label>
+                <input type="text" id="total_amount" name="total_amount" class="form-control uneditable" value="{{ invoice_data[1] }}" readonly>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Confirm</button>
+                <a href="{{ url_for('invoice_appt', user_id=session['user_id']) }}" class="btn btn-secondary">Go Back</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <header>
+            <h3>About Us</h3>
+        </header>
+        <section aria-label="Introduction" class="section-content contact-info">
+            <p>
+                Hororata clinic is based in New Zealand and practice high quality, customer-focused medical services. 
+                We have all gathered with one mission, to be the most accessible healthcare provider in the communities we serve.
+            </p>
+        </section>
+        <!-- Services Section -->
+        <h3>Our Services</h3>
+        <section aria-label="General Consultation" class="section-content contact-info">
+            <h5>General Consultation</h5>
+            <dl class="row">
+                <dt class="col-sm-4">ACC & Under 14:</dt>
+                <dd class="col-sm-8">Free</dd>
+        
+                <dt class="col-sm-4">In-person</dt>
+                <dd class="col-sm-8">$50</dd>
+        
+                <dt class="col-sm-4">Virtual:</dt>
+                <dd class="col-sm-8">$40</dd>
+            </dl>
+            <h5>Repeat Prescriptions</h5>
+            <section aria-label="Introduction">
+                <p>Easy online or app requests then simply collect your medications from your pharmacy</p>
+            </section>
+            <dl class="row">
+                <dt class="col-sm-4">Under 14:</dt>
+                <dd class="col-sm-8">Free</dd>
+            </dl>
+        </section>
+        <div class="container mt-5">
+            <h3>Our Doctors</h3>
+            <div class="row">
+                {% for doctor in doctor_data %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ url_for('static', filename=doctor[5]) }}" class="card-img-top" alt="{{ doctor[0] }} {{ doctor[1] }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doctor[0] }} {{ doctor[1] }}</h5>
+                            <p class="card-text">
+                                <strong>Gender:</strong> {{ doctor[2] }}<br>
+                                <strong>Specialty:</strong> {{ doctor[3] }}<br>
+                                <strong>Language:</strong> {{ doctor[4] }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Nurses Section -->
+            <h3>Our Nurses</h3>
+            <div class="row">
+                {% for nurse in nurse_data %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ url_for('static', filename=nurse[3]) }}" class="card-img-top" alt="{{ nurse[0] }} {{ nurse[1] }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ nurse[0] }} {{ nurse[1] }}</h5>
+                            <p class="card-text">
+                                <strong>Gender:</strong> {{ nurse[2] }}
+                            </p>
+                            
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

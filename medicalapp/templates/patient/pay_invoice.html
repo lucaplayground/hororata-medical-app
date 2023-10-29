@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+
+    <div class="container mt-5">
+        <h3>Pay Invoice</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+        <div class="invoice-box">
+            <div class="invoice-section mb-4">
+                <p><strong>Amount Due:</strong> ${{ invoice[0] }}</p>
+                <p><strong>Invoice Status:</strong> {{ invoice[1] }}</p>
+            </div>
+        </div>
+        <form method="POST">
+            <div class="form-group">
+                <label for="card_name">Name on Card:</label>
+                <input class="form-control" type="text" id="card_name" name="card_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="card_number">Card Number:</label>
+                <input class="form-control" type="text" id="card_number" name="card_number" pattern="\d{16}" placeholder="16-digit number" title="Please enter a valid 16-digit card number." required>
+            </div>
+        
+            <div class="form-group">
+                <label for="expiry_date">Expiry Date (MM/YY):</label>
+                <input class="form-control" type="text" id="expiry_date" name="expiry_date" pattern="(11\/(2[3-9]|[3-9][0-9]))|(12\/(2[3-9]|[3-9][0-9]))|(0[1-9]\/([2-9][4-9]|[3-9][0-9]))|(1[0-2]\/([2-9][4-9]|[3-9][0-9]))" placeholder="MM/YY" title="Please enter a valid expiry date." required>
+            </div>
+        
+            <div class="form-group">
+                <label for="cvv">CVV:</label>
+                <input class="form-control" type="text" id="cvv" name="cvv" placeholder="3 or 4-digit" pattern="\d{3,4}" title="Please enter a valid CVV number." required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Pay Now</button>
+                <a href="{{ url_for('unpaid_invoices', user_id=user_id) }}" class="btn btn-secondary mt-3">Go Back</a>        
+            </div>
+        </form>
+    </div>
+{% endblock %}

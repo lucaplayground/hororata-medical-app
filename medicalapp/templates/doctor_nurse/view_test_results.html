@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Test Results</h3>
+        {% if role == 'Doctor' or role == 'Nurse' %}
+            <h5>Patient: {{ patient_data[1] }} {{ patient_data[2] }}</h5>
+        {% endif %}
+
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <!-- Display Test Results -->
+        <div class="form-group">
+            <p class="form-control">
+                {{ test_results[0] }}
+            </p>
+        </div>
+        {% if role == 'Doctor' or role == 'Nurse' %}
+            <div class="button-container">
+                <a href="{{ url_for('manage_health_records', user_id=session['user_id'], patient_id=patient_data[0], role=session['role']) }}" class="btn btn-secondary">Go Back</a>
+            </div>
+        {% elif role == 'Patient' %}
+            <div class="button-container">
+                <a href="{{ url_for('health_records', user_id=session['user_id']) }}" class="btn btn-secondary">Go Back</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

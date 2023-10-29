@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+<div class="container">
+    <h3>Health Records</h3>
+    <!-- Display the assigned doctor -->
+    <h5>My Doctor: {{ doctor_name[0] }} {{ doctor_name[1] }}</h5>
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <!-- Display health records -->
+    <form action="{{ url_for('health_records', user_id=session['user_id'])}}" method="get" class="form mt-4">
+        {% for record in health_records %}
+            <div class="form-group">
+                <label for="blood_type">Blood Type:</label>
+                <span class="form-control">{{ record[2] }}</span>
+            </div>
+            <div class="form-group">
+                <label for="allergies">Allergies:</label>
+                <span class="form-control">{{ record[3] }}</span>
+            </div>
+            <div class="form-group">
+                <label for="medications">Medications:</label>
+                <span class="form-control">{{ record[4] }}</span>
+            </div>
+            <div class="form-group">
+                <label for="medical_conditions">Medical Conditions:</label>
+                <span class="form-control">{{ record[5] }}</span>
+            </div>
+            <div class="form-group">
+                <label for="surgeries">Surgeries:</label>
+                <span class="form-control">{{ record[6] }}</span>
+            </div>
+            <div class="form-group">
+                <label for="family_history">Family History:</label>
+                <span class="form-control">{{ record[7] }}</span>
+            </div>
+            <div class="form-group">
+                <label for="test_results">Test Results:</label>
+                <a href="{{ url_for('view_test_results', user_id=session['user_id'], role=session['role'], patient_id=session['patient_id'])}}">View Test Results</a>
+            </div>
+            <div class="form-group">
+                <label for="notes">Notes:</label>
+                <textarea class="form-control" rows="5" cols="20" readonly>{{ record[9] }}</textarea>
+            </div>
+        {% endfor %}
+        <div class="button-container">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

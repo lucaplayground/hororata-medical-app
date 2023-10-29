@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="background">
+        <form method="POST" class="form" action="{{ url_for('a/home/patient/int:user_id/appt_payment') }}">
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            
+            <!-- Display the correct amount based on the age group -->
+            <label for="amount">Amount:</label>
+            {% if age_group == "Under 14" %}
+                <input type="text" id="amount" name="amount" disabled value="$0">
+            {% elif age_group == "14-17" %}
+                <input type="text" id="amount" name="amount" disabled value="$55">
+            {% else %}
+                <input type="text" id="amount" name="amount" disabled value="$65">
+            {% endif %}
+            <br>
+
+            <label for="card-number">Card Number:</label>
+            <input type="text" id="card-number" name="card-number" pattern="\d{16}" title="Please enter a valid 16-digit card number." required>
+            <br>
+
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="text" id="expiryDate" name="expiryDate" pattern="(0[1-9]|1[0-2])\/(2[3-9]|[3-9][0-9])" placeholder="MM/YY" title="Please enter a valid expiry date" required>
+            <br>
+
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" pattern="\d{3,4}" title="Please enter a valid CVV number." required>
+            <br>
+
+            <label for="card-holder">Card Holder:</label>
+            <input type="text" id="card-holder" name="card-holder" required>
+            <br>
+
+            <button class='button' type="submit">Pay Now</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

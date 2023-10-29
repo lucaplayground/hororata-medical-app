@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="invoice-box">
+            <div class="invoice-header">
+                <h3 class="section-title">Hororata Medical Invoice</h3>
+            </div>
+            <div class="invoice-section mb-4">
+                <table class="table table-striped invoice-details">
+                    <tr>
+                        <th>Invoice Date</th>
+                        <td>{{ invoice_data.date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount</th>
+                        <td>${{ invoice_data.amount }}</td>
+                    </tr>
+                    <tr>
+                        <th>Invoice Status</th>
+                        <td>{{ invoice_data.status }}</td>
+                    </tr>
+                    <tr>
+                        <th>Appointment Date</th>
+                        <td>{{ appt_data[2] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Patient</th>
+                        <td>{{ appt_data[4] }} {{ appt_data[5] }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ appt_data[8] }}</th>
+                        <td>{{ appt_data[6] }} {{ appt_data[7] }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="button-container">
+            {% if invoice_data.status == 'Unpaid' %}
+                <a href="{{ url_for('collect_payment', user_id=session['user_id'], invoice_id=invoice_data.invoice_id) }}" class="btn btn-primary">Collect Payment</a>
+            {% endif %}
+            <a href="{{ url_for('invoice_appt', user_id=session['user_id']) }}" class="btn btn-secondary">Go Back</a>
+        </div>
+    </div>
+{% endblock %}

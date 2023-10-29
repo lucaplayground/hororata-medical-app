@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Roster</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+        <h5>My Current Slots:</h5>
+
+        {% if nurse_slots %}
+            <ul class="styled-list">
+                {% for slot in nurse_slots %}
+                    <li>Date: {{ slot.available_date }}, Slot Time: {{ slot.slot_time }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-error">You don't have any existing slots.</p>
+        {% endif %}
+
+        <h5>Add New Slots:</h5>
+        <form method="POST" action="/home/nurse/{{ user_id }}/roster" class="form-group">
+            <fieldset>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" class="form-control" min="{{ today }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="slot_time">Slots:</label>
+                    <select id="slot_time" name="slot_time" class="form-control" required>
+                        {% for slot in slots %}
+                            <option value="{{ slot.slot_id }}">Slot {{ slot.slot_id }}: {{ slot.formatted_time }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Slot</button>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

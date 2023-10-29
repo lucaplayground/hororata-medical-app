@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h3>Payment History</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}    
+        <div class="button-container">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>
+        </div>
+        <!-- Appointment List -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Payment Date</th>
+                        <th class="d-none d-lg-table-cell">Payment Method</th>
+                        <th>Amount</th>
+                        <th>Appointment Date</th>
+                        <th class="d-none d-lg-table-cell">Appointment Time</th>
+                        <th>Appointment Type</th>
+                        <th class="d-none d-lg-table-cell">Staff Name</th>
+                        <th class="d-none d-lg-table-cell">Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for payment in payment_data %}
+                    <tr>
+                        <td>{{ payment[0] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ payment[2] }}</td>
+                        <td>${{ payment[1] }}</td>
+                        <td>{{ payment[3] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ payment[4] }}</td>
+                        <td>{{ payment[5] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ payment[6] }} {{ payment[7] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ payment[8] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Patient Details</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Assigned Doctor</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Contact Number</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for patient in patient_data %}
+                    <tr>
+                        <td>{{ patient[2] }} {{ patient[3] }}</td>
+                        <td>{{ patient[11] }} {{ patient[12] }}</td>
+                        <td>{{ patient[4] }}</td>
+                        <td>{{ patient[10] }}</td>
+                        <td>{{ patient[6] }}</td>
+                        <td>{{ patient[7] }}</td>
+                        <td>{{ patient[8] }}</td>
+                        <td>
+                            <a href="{{ url_for('manage_health_records', user_id=session['user_id'], patient_id=patient[0], role=session['role']) }}" class="text-primary">View Health Records</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

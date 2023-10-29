@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h4>Nurse Dashboard</h4>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <!-- Card 1: My Appointments -->
+            <div class="col-md-6">
+                <div class="card dashboard-card">
+                    <img src="{{ url_for('static', filename='my-appt.jpg') }}" class="card-img-top" alt="My Appointments">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">My Appointments</h5>
+                        <p class="card-text">View and manage your appointments.</p>
+                        <a href="{{ url_for('view_appointments', role=session['role'], user_id=session['user_id']) }}" class="btn btn-secondary">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: My Roster -->
+            <div class="col-md-6">
+                <div class="card dashboard-card">
+                    <img src="{{ url_for('static', filename='my-roster.jpg') }}" class="card-img-top" alt="My Roster">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">My Roster</h5>
+                        <p class="card-text">Manage your work schedule.</p>
+                        <a href="{{ url_for('nurse_roster', user_id=user_id) }}" class="btn btn-secondary">Go</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock %}

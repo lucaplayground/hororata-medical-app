@@ -1,0 +1,14 @@
+<!-- 403.html -->
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="alert alert-danger">
+        <h3>403: Forbidden</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+<!-- Your code goes here -->
+    <div class="container mt-5">
+        <h3>Doctor Profile</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username: </label>
+                <p class="form-control" id="uneditable">{{ user_data[0] }}</p>
+            </div>
+            <div class="form-group">
+                <label>* First Name: </label>
+                <input class="form-control" type="text" name="fname" value="{{ user_data[1] }}" required>
+            </div>
+            <div class="form-group">
+                <label>* Last Name: </label>
+                <input class="form-control" type="text" name="lname" value="{{ user_data[2] }}" required>
+            </div>
+            <div class="form-group">
+                <label>Gender: </label>
+                <input class="form-control" type="text" value="{{ user_data[3] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Specialty: </label>
+                <input class="form-control" type="text" name="specialty" value="{{ user_data[4] }}" required>
+            </div>
+            <div class="form-group">
+                <label>Language: </label>
+                <input class="form-control" type="text" name="language" value="{{ user_data[5] }}" required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+                <a href="{{ url_for('change_password', user_id=user_id) }}" class="btn btn-secondary">Change Password</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

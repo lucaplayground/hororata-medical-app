@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block body_class %}login-bg{% endblock %}
+{% block content %}
+    <div class="conatiner">
+        <!-- Registration Form -->
+        <h3>Sign up with us</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <form class="form" method="POST" action="/register">
+            <div class="row">
+                <div class="col-md-4">
+                    <fieldset>
+                        <legend>Account Details</legend>
+                        <!-- Account Details -->
+                        <div class="form-group">
+                            <label for="username">* Username </label>
+                            <input class="form-control" type="text" name="username" value="{{ form_data.username if form_data is defined }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">* Password </label>
+                            <input class="form-control" type="password" id="password" name="password" required />
+                            <div id="password-strength"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_password">* Confirm Password </label>
+                            <input class="form-control" type="password" name="confirm_password" required />
+                        </div>
+                        <!-- Personal Details -->
+                        <div class="form-group">
+                            <label for="fname">* First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">* Last Name </label>
+                            <input class="form-control" type="text" id="lname" name="lname" value="{{ form_data.lname if form_data is defined }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">* Gender </label>
+                            <select id="gender" class="form-control" name="gender" value="{{ form_data.gender if form_data is defined }}" >
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">* Day of Birth </label>
+                            <input class="form-control" type="date" name="dob" max="{{ today }}" value="{{ form_data.dob if form_data is defined }}" required />
+                        </div>
+                        <!-- Contact Details -->
+                        <div class="form-group">
+                            <label for="email">* Email </label>
+                            <input class="form-control" class="form-control" type="email" name="email" value="{{ form_data.email if form_data is defined }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_num">* Contact number </label>
+                            <input class="form-control" type="text" name="contact_num" value="{{ form_data.contact_num if form_data is defined }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="address">* Address </label>
+                            <input class="form-control" type="text" name="address" value="{{ form_data.address if form_data is defined }}" required />
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Select a Doctor -->
+                <div class="col-md-4">
+                    <fieldset>
+                        <legend>Register with a Doctor</legend>
+                        <div class="form-group">
+                            <label for="doctor">* Select a Doctor </label>
+                            <select id="doctor" name="doctor" class="form-control" required>
+                                <option value="" disabled selected>Select a Doctor</option>
+                                {% for doctor in doctors %}
+                                    <option value="{{ doctor[0] }}">{{ doctor[2] }} {{ doctor[3] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="doctor-info-box">
+                            <div id="doctor-info" style="display: none;"></div>
+                        </div>
+                    </fieldset>
+                <div class="form-group">   
+                    <input class="btn btn-primary" type="submit" value="Register" />
+                </div>
+                </div>
+            </div>
+
+        </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const doctorDropdown = document.getElementById("doctor");
+            const doctorProfileDiv = document.getElementById("doctor-info");
+        
+            doctorDropdown.addEventListener("change", function() {
+                const selectedDoctorId = this.value;
+                if (selectedDoctorId) {
+                    doctorProfileDiv.style.display = "block";
+                    // Fetch doctor details using AJAX
+                    fetch(`/get_doctor_details/${selectedDoctorId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update the doctorProfileDiv with the fetched data
+                        doctorProfileDiv.innerHTML = `
+                        <img src="/static/${data.photo}" class="card-img-top" alt="Doctor Photo">
+                        <div class="card-body">
+                            <h5 class="card-title">${data.fname} ${data.lname}</h5>
+                            <p class="card-text">
+                                <strong>Gender:</strong> ${data.gender}<br>
+                                <strong>Specialty:</strong> ${data.specialty}<br>
+                                <strong>Language:</strong> ${data.language}
+                            </p>
+                        </div>
+                        `;
+                    });
+                } else {
+                    doctorProfileDiv.style.display = "none";
+                }
+            });
+        });
+    </script>    
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+  <div class="container">
+    <h3>Add user</h3>
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ category }}">
+          {{ message }}
+      </div>
+    {% endfor %}
+
+    <form class="form" method="POST">
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <select class="form-control" name="role" id="role" required>
+          <option value="None">Choose</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Nurse">Nurse</option>
+          <option value="Receptionist">Receptionist</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" name="username" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" name="password" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="fname">First Name:</label>
+        <input type="text" name="fname" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="lname">Last Name:</label>
+        <input type="text" name="lname" class="form-control" required />
+      </div>
+      <div id="additional-fields" class="form-group"></div>
+      
+      <div class="button-container">
+        <button type="button" class="btn btn-secondary" onclick="goBack()">Go Back</button>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    const roleSelect = document.getElementById("role");
+    const additionalFields = document.getElementById("additional-fields");
+
+    roleSelect.addEventListener("change", () => {
+      const selectedRole = roleSelect.value;
+      additionalFields.innerHTML = ""; // Clear previous fields
+
+      if (selectedRole === "Doctor") {
+        // Create Doctor-specific fields
+        additionalFields.innerHTML = `
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select class="form-control" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="specialty">Specialty:</label>
+          <input class="form-control" type="text" name="specialty" required>
+        </div>
+        <div class="form-group">
+          <label for="language">Language:</label>
+          <input class="form-control" type="text" name="language" required>
+        </div>
+        `;
+      } else if (selectedRole === "Nurse") {
+        // Create Nurse-specific fields
+        additionalFields.innerHTML = `
+          <label for="gender">Gender:</label>
+          <select class="form-control" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <br>
+        `;
+      } else if (selectedRole === "Receptionist") {
+        // Create Receptionist-specific fields
+        additionalFields.innerHTML = `
+        `;
+      }
+    });
+
+    // Function to go back
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+{% endblock %}

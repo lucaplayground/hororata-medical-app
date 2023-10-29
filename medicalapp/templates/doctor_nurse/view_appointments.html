@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>My Appointments</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <!-- Search and Sort -->
+        <div class="row">
+            <!-- Filters and Searchbox -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="typeFilter">Filter by Type: </label>
+                    <select id="typeFilter" class="form-control">
+                        <option value="all">All</option>
+                        <option value="In-person">In-person</option>
+                        <option value="Virtual">Virtual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusFilter">Filter by Status: </label>
+                    <select id="statusFilter" class="form-control">
+                        <option value="all">All</option>
+                        <option value="Upcoming">Upcoming</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="searchBox">Search by Name: </label>
+                    <div class="search-box">
+                        <input class="form-control" type="text" id="searchBox" placeholder="Enter a Name ...">
+                    </div>
+                </div>
+                <a id="addNotesBtn" href="#" class="btn btn-primary" disabled>Add/View Notes</a>
+                <a id="completeBtn" href="#" class="btn btn-secondary" disabled>Complete Appointment</a>
+            </div>    
+            
+            <!-- Appointment List -->
+            <div class="col-md-8">
+                <form id="apptForm" class="form mt-4" method="post" action="{{ url_for('view_appointments', role=role, user_id=user_id) }}">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Patient Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                {% if session['role'] == 'Nurse' %}
+                                    <th>Action</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for appt in appt_data %}
+                            <tr>
+                                <td><input type="radio" name="appt_id" value="{{ appt[2] }}"></td>
+                                <td>{{ appt[12] }} {{ appt[13] }}</td>
+                                <td>{{ appt[0] }}</td>
+                                <td>{{ appt[1] }}</td>
+                                <td>{{ appt[8] }}</td>
+                                <td>{{ appt[11] }}</td>
+                                {% if session['role'] == 'Nurse' %}
+                                    <td>
+                                        <a href="{{ url_for('view_patient_details', user_id=user_id, patient_id=appt[14]) }}">Patient Details</a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("apptForm");
+            const addNotesBtn = document.getElementById("addNotesBtn");
+            const completeBtn = document.getElementById("completeBtn");
+            const typeFilter = document.getElementById("typeFilter");
+            const statusFilter = document.getElementById("statusFilter");
+            const searchBox = document.getElementById("searchBox");
+            const tableRows = document.querySelectorAll("tbody tr");
+
+            // Enabling/disabling the buttons
+            form.addEventListener("change", function() {
+                const selectedAppt = form.appt_id.value;
+                if (selectedAppt) {
+                    addNotesBtn.href = `/home/{{ role }}/{{ user_id }}/add_notes?appt_id=${selectedAppt}`;
+                    addNotesBtn.removeAttribute("disabled");
+                    completeBtn.href = `/home/{{ role }}/{{ user_id }}/complete_appt?appt_id=${selectedAppt}`;
+                    completeBtn.removeAttribute("disabled");
+                } else {
+                    addNotesBtn.setAttribute("disabled", "disabled");
+                    completeBtn.setAttribute("disabled", "disabled");
+                }
+            });
+
+            // Filtering table based on type, status, and search term
+            function filterRows() {
+                const selectedType = typeFilter.value;
+                const selectedStatus = statusFilter.value;
+                const searchTerm = searchBox.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const typeCell = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
+                    const statusCell = row.querySelector("td:nth-child(6)").textContent.toLowerCase();
+                    const patientNameCell = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+
+                    if ((selectedType === "all" || typeCell === selectedType.toLowerCase()) &&
+                        (selectedStatus === "all" || statusCell === selectedStatus.toLowerCase()) &&
+                        (searchTerm === "" || patientNameCell.includes(searchTerm))) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+            // Call filterRows function when any filter changes
+            typeFilter.addEventListener("change", filterRows);
+            statusFilter.addEventListener("change", filterRows);
+            searchBox.addEventListener("input", filterRows);
+        });
+    </script>
+{% endblock %}

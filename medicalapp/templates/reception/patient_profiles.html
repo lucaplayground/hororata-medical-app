@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Patient Information</h3>
+        
+        <!-- Search and Sort -->
+        <div class="row filter-row">
+            <div class="row search-row">
+                <form method="POST">
+                    <div class="col-md-6">
+                        <label for="searchBox">Search by Name or Phone Number: </label>
+                        <input class="form-control" type="text" name="search_query" placeholder="Enter a name or phone number ..." value="{{ search_query }}">
+                    </div>
+                    <div class="button-container">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                        <a href="{{ url_for('home') }}" class="btn btn-secondary">Go Back</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+        <!-- Patient List -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th class="d-none d-lg-table-cell">Date of Birth</th>
+                        <th>Phone Number</th>
+                        <th class="d-none d-lg-table-cell">Address</th>
+                        <th class="d-none d-lg-table-cell">Email</th>
+                        <th>Assigned Doctor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>  
+                        <td>{{ patient[2] }} {{ patient[3] }}</td>
+                        <td>{{ patient[4] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ patient[12] }}</td>
+                        <td>{{ patient[6] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ patient[7] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ patient[8] }}</td>
+                        <td>{{ patient[10] }} {{ patient[11] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

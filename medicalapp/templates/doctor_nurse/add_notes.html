@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h3>Add Notes for Appointment ID: {{ appt_id }}</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <form method="post" action="{{ url_for('add_notes', role=role, user_id=user_id, appt_id=appt_id) }}" class="form">
+            <div class="form-group">
+                <textarea name="notes" rows="10" cols="50" class="form-control">{{ current_notes[0] }}</textarea>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Save Notes</button>
+                <a href="{{ url_for('view_appointments', role=role, user_id=user_id) }}" class="btn btn-secondary">Go Back</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

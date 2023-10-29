@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Booking Successful!</h3>
+        <p>The appointment has been successfully scheduled.</p>
+        <a href="{{ url_for('home', role='reception', user_id=user_id) }}" class="btn btn-secondary">Go Back</a>
+    </div>
+{% endblock %}

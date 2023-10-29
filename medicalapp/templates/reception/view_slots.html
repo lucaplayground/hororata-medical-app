@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Available Time Slots for {{ staff_type.title() }}s</h3>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        {% for date in upcoming_dates %}
+                        <th>{{ date }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff_name, dates in organized_slots.items() %}
+                    <tr>
+                        <td>{{ staff_name }}</td>
+                        {% for date in upcoming_dates %}
+                        <td>
+                            {% if date in dates %}
+                                {% for time in dates[date] %}
+                                {% set day, month, year = date.split('/') %}
+                                <a href="{{ url_for('confirm_booking', 
+                                                    user_id=user_id, 
+                                                    patient_id=patient_id, 
+                                                    staff_type=staff_type, 
+                                                    staff_name=staff_name, 
+                                                    year=year, 
+                                                    month=month, 
+                                                    day=day, 
+                                                    appointment_time=time[0]|string + ':' + time[1]|string) }}">
+                                    {{ time[0] }}:{{ "%02d"|format(time[1]) }}<br>
+                                </a>
+                                {% endfor %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ url_for('select_staff', user_id=user_id, patient_id=patient_id) }}" class="btn btn-secondary">Go Back</a>
+    </div>
+{% endblock %}

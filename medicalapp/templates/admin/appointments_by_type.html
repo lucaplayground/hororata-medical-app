@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h3>Report: Appointments by Type</h3>
+    <div class="table-container">
+        <table class="table table-striped w-auto">
+            <thead>
+                <tr>
+                    <th>Appointment Type</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><strong>In Total</strong></td>
+                    <td>{{ total_appointments }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="{{ url_for('reports', role=role,user_id=user_id) }}" class="btn btn-secondary mt-3">Go Back</a>
+</div>
+
+{% endblock %}

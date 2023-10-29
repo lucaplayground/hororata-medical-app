@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Select Staff Type</h3>
+        <form method="post">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <select class="form-control" id="staff_type" name="staff_type">
+                            <option value="doctor">My Doctor</option>
+                            <option value="nurse">Nurse</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="btn btn-primary form-control" value="Next">
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{ url_for('select_appointment_type', user_id=user_id) }}" class="btn btn-secondary form-control">Back</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <header>
+            <h3>Contact Us</h3>
+        </header>
+        <section aria-label="Introduction">
+            <p>
+                Whether you have an enquiry, wish to provide us feedback or make a complaint, 
+                we’re here to help. We aim to respond within 2-3 business days.
+                Please phone us if your enquiry is urgent.
+            </p>
+            <p class="alert alert-danger">
+                <strong>In an emergency phone 111</strong>
+            </p>
+        </section>
+
+        <section aria-label="Contact Details">
+            <div class="contact-info">
+                <h5><i class="fas fa-phone"></i> Phone</h5>
+                <p>03 123 4567</p>
+            </div>
+            
+            <div class="contact-info">
+                <h5><i class="fas fa-envelope"></i> Email</h5>
+                <p><a href="mailto:info@hororata.co.nz">info@hororata.co.nz</a></p>
+            </div>
+            
+            <div class="contact-info">
+                <h5><i class="fas fa-map-marker-alt"></i> Address</h5>
+                <address>1 Hororato Road, Christchurch</address>
+            </div>
+
+            <div class="hours">
+                <h5><i class="fas fa-clock"></i> Hours</h5>
+                <dl class="row">
+                    <dt class="col-sm-4">Mon-Sat:</dt>
+                    <dd class="col-sm-8">9am-5pm</dd>
+
+                    <dt class="col-sm-4">Sat:</dt>
+                    <dd class="col-sm-8">9am-12pm</dd>
+            
+                    <dt class="col-sm-4">Sun & Public Holidays:</dt>
+                    <dd class="col-sm-8">Closed</dd>
+                </dl>
+            </div>
+        </section>
+    </div>
+{% endblock %}

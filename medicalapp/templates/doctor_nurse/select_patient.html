@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h3>Select Patient for New Prescription</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <form method="post">
+            <!-- Removed the action attribute -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Patient Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                        <tr>
+                            <td><input type="radio" name="patient_id" value="{{ patient[0] }}" required></td>
+                            <td>{{ patient[2] }} {{ patient[3] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary mt-3">Next</button>
+                <a href="{{ url_for('prescription_history', user_id=user_id) }}" class="btn btn-secondary">Go Back</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

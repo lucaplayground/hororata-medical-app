@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Reception Dashboard</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <!-- Card 1: Book an Appointment -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <img src="{{ url_for('static', filename='book-appt.jpg') }}" class="card-img-top" alt="Book an Appointment">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Book an Appointment</h5>
+                        <p class="card-text">Book an appointment for a patient. </p>
+                        <a href="{{ url_for('search_patient', user_id=session['user_id']) }}" class="btn btn-secondary">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Invoice and Payment -->
+            <div class="col-md-4">
+            <div class="card dashboard-card">
+                <img src="{{ url_for('static', filename='invoice-payment.jpg') }}" class="card-img-top" alt="Invoice and Payment">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Invoice and Payment</h5>
+                    <p class="card-text">Manage invoices and Process payments. </p>
+                    <a href="{{ url_for('invoice_appt', user_id=session['user_id']) }}" class="btn btn-secondary">Go</a>
+                </div>
+            </div>
+            </div>
+
+            <!-- Card 3: All Appointments -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <img src="{{ url_for('static', filename='all-appt.jpg') }}" class="card-img-top" alt="Appointments History">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">All Appointments</h5>
+                        <p class="card-text">View all appointments. </p>
+                        <a href="{{ url_for('all_appt', role=role, user_id=user_id) }}" class="btn btn-secondary">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: All Prescriptions -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <img src="{{ url_for('static', filename='all-prescriptions.jpg') }}" class="card-img-top" alt="Prescriptions">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Prescription History</h5>
+                        <p class="card-text">View all prescriptions. </p>
+                        <a href="{{ url_for('all_prescriptions', user_id = user_id) }}" class="btn btn-secondary">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: All Patients -->
+            <div class="col-md-4">
+                <div class="card dashboard-card">
+                    <img src="{{ url_for('static', filename='all-patients.jpg') }}" class="card-img-top" alt="All Patients">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Patient Information</h5>
+                        <p class="card-text">View all patients. </p>
+                        <a href="{{ url_for('reception_view_patients', user_id=user_id) }}" class="btn btn-secondary">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

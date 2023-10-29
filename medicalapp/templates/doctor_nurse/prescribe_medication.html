@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+
+    <div class="container mt-5">
+        <h3>Add Prescription for Patient: {{ patient[2] }} {{ patient[3] }}</h3>
+        <form method="post">
+            <div class="form-group">
+                <label for="medication">Medication:</label>
+                <input type="text" class="form-control" id="medication" name="medication" required>
+            </div>
+            <div class="form-group">
+                <label>Repeatable:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="repeatable" id="repeatableYes" value="Yes" required>
+                    <label class="form-check-label" for="repeatableYes">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="repeatable" id="repeatableNo" value="No" required>
+                    <label class="form-check-label" for="repeatableNo">
+                        No
+                    </label>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary mt-3">Next</button>
+                <a href="{{ url_for('select_patient', user_id=user_id) }}" class="btn btn-secondary">Go Back</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

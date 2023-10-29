@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <!-- Your code goes here -->
+    <div class="container mt-5">
+        <h3>All Appointments</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <!-- Search and Sort -->
+        <div class="row filter-row">
+            <div class="col-md-2">
+                <label for="typeFilter">Filter by Type: </label>
+                <select id="typeFilter" class="form-control">
+                    <option value="all">All</option>
+                    <option value="In-person">In-person</option>
+                    <option value="Virtual">Virtual</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="roleFilter">Staff Role: </label>
+                <select id="roleFilter" class="form-control">
+                    <option value="all">All</option>
+                    <option value="Doctor">Doctor</option>
+                    <option value="Nurse">Nurse</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="statusFilter">Status: </label>
+                <select id="statusFilter" class="form-control">
+                    <option value="all">All</option>
+                    <option value="Upcoming">Upcoming</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row search-row">
+            <div class="col-md-4">
+                <label for="searchBox">Search by Name: </label>
+                <input class="form-control" type="text" id="searchBox" placeholder="Enter a Name...">
+            </div>
+            <div class="col-md-2">
+                <a href="{{ url_for('home') }}" class="btn btn-secondary form-control">Go Back</a>
+            </div>
+        </div>
+        
+
+        <!-- Appointment List -->
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient Name</th>
+                        <th>Staff Name</th>
+                        <th class="d-none d-lg-table-cell">Role</th>
+                        <th>Charge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for appt in appt_data %}
+                    <tr>
+                        <td>{{ appt[9] }}</td>
+                        <td>{{ appt[10] }}</td>
+                        <td>{{ appt[1] }}</td>
+                        <td>{{ appt[2] }}</td>
+                        <td>{{ appt[3] }} {{ appt[4] }}
+                        <td>{{ appt[5] }} {{ appt[6] }}</td>
+                        <td class="d-none d-lg-table-cell">{{ appt[7] }}</td>
+                        <td>{{ appt[8] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const typeFilter = document.getElementById("typeFilter");
+            const roleFilter = document.getElementById("roleFilter");
+            const statusFilter = document.getElementById("statusFilter");
+            const searchBox = document.getElementById("searchBox");
+            const tableRows = document.querySelectorAll("tbody tr");
+
+            function filterRows() {
+                const selectedType = typeFilter.value;
+                const selectedRole = roleFilter.value;
+                const selectedStatus = statusFilter.value;
+                const searchTerm = searchBox.value.toLowerCase();
+
+                tableRows.forEach(row => {
+                    const typeCell = row.querySelector("td:nth-child(2)").textContent;
+                    const roleCell = row.querySelector("td:nth-child(7)").textContent;
+                    const statusCell = row.querySelector("td:nth-child(1)").textContent;
+                    const patientNameCell = row.querySelector("td:nth-child(5)").textContent.toLowerCase();
+                    const doctorNameCell = row.querySelector("td:nth-child(6)").textContent.toLowerCase();
+
+                    if ((selectedRole === "all" || roleCell === selectedRole) &&
+                        (selectedStatus === "all" || statusCell === selectedStatus) &&
+                        (selectedType === "all" || typeCell === selectedType) &&
+                        (searchTerm === "" || patientNameCell.includes(searchTerm) || doctorNameCell.includes(searchTerm))) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+
+            typeFilter.addEventListener("change", filterRows);
+            roleFilter.addEventListener("change", filterRows);
+            statusFilter.addEventListener("change", filterRows);
+            searchBox.addEventListener("input", filterRows); 
+        });
+    </script>
+{% endblock %}

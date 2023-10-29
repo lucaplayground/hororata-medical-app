@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block body_class %}home-bg{% endblock %}
+{% block content %}
+    <!-- Your code goes here -->
+    <div class="container">
+        <h3>Appointment Pay</h3>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <form class="form" method="POST" action="{{ url_for('pay_for_appointment', user_id=user_id, staff_type=staff_type, staff_id=staff_id, appt_type=appt_type, price_id=price_id) }}">
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="text" class="form-control" id="amount" name="amount" value="{{ amount }} NZD" readonly>
+            </div>
+            <div class="form-group">
+                <label for="card-number">Card Number:</label>
+                <input type="text" class="form-control" id="card-number" name="card_number" pattern="\d{16}" placeholder="16-digit number" title="Please enter a valid 16-digit card number." required>
+            </div>
+            <div class="form-group">
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="text" class="form-control" id="expiryDate" name="expiry_date" pattern="(11\/(2[3-9]|[3-9][0-9]))|(12\/(2[3-9]|[3-9][0-9]))|(0[1-9]\/([2-9][4-9]|[3-9][0-9]))|(1[0-2]\/([2-9][4-9]|[3-9][0-9]))" placeholder="MM/YY" title="Please enter a valid expiry date." required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV:</label>
+                <input type="text" class="form-control" id="cvv" name="cvv" pattern="\d{3,4}" placeholder="3 or 4-digit number" title="Please enter a valid CVV number." required>
+            </div>
+            <div class="form-group">
+                <label for="card-holder">Card Holder:</label>
+                <input type="text" class="form-control" id="card-holder" name="card_holder" required>
+            </div>
+            <div class="button-container">
+                <a href="{{ url_for('select_time_slot', user_id=user_id, staff_type=staff_type, staff_id=staff_id, appt_type=appt_type) }}" class="btn btn-secondary">Go Back</a>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
