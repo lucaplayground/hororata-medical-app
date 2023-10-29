@@ -240,9 +240,9 @@ INSERT INTO slots (slot_time) VALUES
 
 -- Inserting dummy data into the doctor_slots table
 INSERT INTO doctor_slots (doctor_id, slot_id, available_date) VALUES
-(1, 1, '2023-10-30'),
-(1, 2, '2023-10-30'),
-(1, 3, '2023-10-30'),
+(1, 1, '2023-11-05'),
+(1, 2, '2023-11-05'),
+(1, 3, '2023-11-05'),
 (2, 4, '2023-10-30'),
 (2, 5, '2023-10-30'),
 (2, 6, '2023-10-30'),
@@ -338,7 +338,7 @@ INSERT INTO health_records (patient_id, blood_type, allergies, medications, medi
 -- Insert dummy data into invoices table
 INSERT INTO invoices (appt_id, amount, status) VALUES
   (1, 50.00, 'Paid'),
-  (3, 50.00, 'Unpaid'),
+  (2, 40.00, 'Unpaid'),
   (5, 50.00, 'Unpaid');
 
 -- Insert dummy data into payments table
