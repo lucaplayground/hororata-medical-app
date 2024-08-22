@@ -6,6 +6,25 @@
 4. nurse1 - 5
 5. patient1 - 10 (patient10 is under 14)
 
+## Colour Scheme
+<img width="413" alt="image" src="https://github.com/user-attachments/assets/0da0e81b-559f-4c6d-8db7-f95111124bea">
+
+## UI Design
+### Registration Form
+<img width="705" alt="image" src="https://github.com/user-attachments/assets/ee030b09-e0e9-40cb-a639-2c5d8df3751e">
+
+### Login Page
+<img width="702" alt="image" src="https://github.com/user-attachments/assets/f9971b44-9ff7-4847-b235-d9ad9cada042">
+
+<img width="305" alt="image" src="https://github.com/user-attachments/assets/806e5654-eb59-4476-b25a-7b93f30b7ebc">           <img width="145" alt="image" src="https://github.com/user-attachments/assets/bb6bae27-9545-40d1-9f74-722a9de7e6a4">
+
+### Dashboard
+<img width="704" alt="image" src="https://github.com/user-attachments/assets/d9b7d6d6-666d-45a7-9f3f-3d64645f9dc3">           
+
+<img width="704" alt="image" src="https://github.com/user-attachments/assets/270d729d-a020-4072-a6f4-082870ede349">
+
+<img width="306" alt="image" src="https://github.com/user-attachments/assets/aad45323-a0f1-4ae8-bccc-dd208bc85144">           <img width="145" alt="image" src="https://github.com/user-attachments/assets/2fb39d8e-5a10-40af-8d08-8778b2ef2cc8">
+
 ## Assumptions
 1. Patients are required to make payment immediately following their in-person appointments.
 2. Patients need to pay for a virtual appointment upfront when they book the appointment. There's no need for receptionist to generate invoices for a virtual appointment.
